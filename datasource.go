@@ -151,6 +151,17 @@ func (c *Client) DataSource(id int64) (*DataSource, error) {
 	return result, err
 }
 
+// GetAllDataSources returns all configured datasources.
+func (c *Client) GetAllDataSources() ([]*DataSource, error) {
+	result := []*DataSource{}
+	err := c.request("GET", "/api/datasources", nil, nil, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, err
+}
+
 // DeleteDataSource deletes the Grafana data source whose ID it's passed.
 func (c *Client) DeleteDataSource(id int64) error {
 	path := fmt.Sprintf("/api/datasources/%d", id)
