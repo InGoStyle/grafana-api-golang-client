@@ -76,8 +76,9 @@ type JSONData struct {
 	ConnMaxLifetime int64 `json:"connMaxLifetime,omitempty"`
 
 	// Used by Prometheus
-	HTTPMethod   string `json:"httpMethod,omitempty"`
-	QueryTimeout string `json:"queryTimeout,omitempty"`
+	HTTPMethod                  string                       `json:"httpMethod,omitempty"`
+	QueryTimeout                string                       `json:"queryTimeout,omitempty"`
+	ExemplarTraceIdDestinations []ExemplarTraceIdDestination `json:"exemplarTraceIdDestinations,omitempty"`
 
 	// Used by Stackdriver
 	AuthenticationType string `json:"authenticationType,omitempty"`
@@ -101,6 +102,11 @@ type SecureJSONData struct {
 
 	// Used by Stackdriver
 	PrivateKey string `json:"privateKey,omitempty"`
+}
+
+type ExemplarTraceIdDestination struct {
+	Name string `json:"name"`
+	URL  string `json:"url"`
 }
 
 // NewDataSource creates a new Grafana data source.
