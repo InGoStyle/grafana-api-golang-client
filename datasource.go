@@ -19,8 +19,9 @@ type DataSource struct {
 	// Deprecated: Use secureJsonData.password instead.
 	Password string `json:"password,omitempty"`
 
-	OrgID     int64 `json:"orgId,omitempty"`
-	IsDefault bool  `json:"isDefault"`
+	OrgID     int64  `json:"orgId,omitempty"`
+	Uid       string `json:"uid,omitempty"`
+	IsDefault bool   `json:"isDefault"`
 
 	BasicAuth     bool   `json:"basicAuth"`
 	BasicAuthUser string `json:"basicAuthUser,omitempty"`
@@ -143,6 +144,19 @@ func (c *Client) DataSource(id int64) (*DataSource, error) {
 	}
 
 	return result, err
+}
+
+func (c *Client) GetAllDataSources() ([]DataSource, error) {
+
+	result := []DataSource{}
+
+	err := c.request("GET", "/api/datasources", nil, nil, &result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
 
 // DeleteDataSource deletes the Grafana data source whose ID it's passed.
