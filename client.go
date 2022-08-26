@@ -16,6 +16,11 @@ import (
 	"github.com/hashicorp/go-cleanhttp"
 )
 
+type Error struct {
+	Status  int    `json:"status"`
+	Message string `json:"message"`
+}
+
 // Client is a Grafana API client.
 type Client struct {
 	config  Config
@@ -80,7 +85,7 @@ func (c *Client) request(method, requestPath string, query url.Values, body io.R
 	}
 
 	if resp.StatusCode >= 400 {
-		return fmt.Errorf("status: %d, body: %v", resp.StatusCode, string(bodyContents))
+		return fmt.Errorf("{ status: %d, body: %v }", resp.StatusCode, string(bodyContents))
 	}
 
 	if responseStruct == nil {
